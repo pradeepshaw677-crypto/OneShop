@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <meta name="google-site-verification" content="_jHpaOx4b9myqd_cr8WEqHMwaD9xAn1Hcj5Z5Z0HdnQ" />
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <title>Dreamy Delight – Premium</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap');
+
+        :root {
+            --bg-color: #FCF8F2;
+            --primary-dark: #2C1E16;
+            --accent-gold: #D4A017;
+            --accent-glow: #F5C842;
+            --text-muted: #7A6B5D;
+            --shadow-soft: 0 8px 30px rgba(0,0,0,0.06);
+            --glass-bg: rgba(255, 255, 255, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Segoe UI', sans-serif; }
+        body { background: var(--bg-color); padding-bottom: 70px; overflow-x: hidden; color: var(--primary-dark); }
+
+        /* HEADER – GLASS + GOLD (unchanged) */
+        .header {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 160, 23, 0.25);
+            padding: 15px 15px 25px 15px;
+            border-bottom-left-radius: 35px;
+            border-bottom-right-radius: 35px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            z-index: 5;
+        }
+        .top-row {
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 45px;
+        }
+        .menu-icon {
+            font-size: 32px;
+            cursor: pointer;
+            z-index: 2;
+            color: var(--primary-dark);
+            transition: transform 0.2s;
+        }
+        .menu-icon:active { transform: scale(0.85); }
+        .brand-title {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #F5C842, #D4A017, #F5C842);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            z-index: 1;
+            pointer-events: none;
+            animation: shimmerGold 3s ease-in-out infinite;
+        }
+        @keyframes shimmerGold {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* SLIDER – GLASS (unchanged) */
+        .slider {
+            width: 92%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            margin: 25px auto 20px auto;
+            border-radius: 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            background: var(--glass-bg);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--glass-border);
+        }
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .slide { min-width: 100%; height: 100%; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .prev, .next {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(44, 30, 22, 0.5); backdrop-filter: blur(6px);
+            color: white; border: 1px solid rgba(255,255,255,0.2);
+            width: 40px; height: 40px; border-radius: 50%; font-size: 18px;
+            cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .prev:hover, .next:hover { background: rgba(44, 30, 22, 0.8); transform: translateY(-50%) scale(1.05); }
+        .prev { left: 12px; } .next { right: 12px; }
+
+        .dots {
+            position: absolute; bottom: 14px; width: 100%; display: flex; justify-content: center; gap: 8px;
+        }
+        .dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5); transition: all 0.3s;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .dot.active { background: var(--accent-glow); width: 30px; border-radius: 10px; box-shadow: 0 0 16px rgba(245, 200, 66, 0.4); }
+
+        /* TITLE */
+        .title {
+            font-size: 28px; padding: 10px 20px 20px 20px; font-weight: 800;
+            position: relative; color: var(--primary-dark);
+        }
+        .title::after {
+            content: ''; position: absolute; bottom: 12px; left: 20px;
+            width: 60px; height: 4px; background: linear-gradient(90deg, var(--accent-glow), var(--accent-gold));
+            border-radius: 4px;
+        }
+
+        /* MENU GRID – GLASS CARDS (unchanged) */
+        .menu-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; padding: 0 20px; margin-bottom: 35px;
+        }
+        .card {
+            background: var(--glass-bg); backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border); padding: 16px 12px 20px;
+            text-align: center; border-radius: 24px; box-shadow: var(--shadow-soft);
+            cursor: pointer; transition: transform 0.25s, box-shadow 0.3s, border-color 0.3s;
+        }
+        .card:active { transform: scale(0.96); border-color: var(--accent-glow); }
+        .card img { width: 100%; height: 150px; border-radius: 18px; object-fit: contain; margin-bottom: 12px; filter: drop-shadow(0 12px 20px rgba(0,0,0,0.06)); }
+        .card h3 { margin-top: 8px; color: var(--primary-dark); font-size: 16px; font-weight: 700; }
+
+        /* ===== BOTTOM NAV – GLASS (REDUCED AREA + BLACK ICONS) ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.4);      /* lighter glass */
+            backdrop-filter: blur(8px);                /* thinner blur */
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 12px 0;                    /* reduced vertical padding */
+            z-index: 100;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .bottom-nav div {
+            color: #000000;                           /* black text */
+            text-align: center;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.25s;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .bottom-nav div .nav-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bottom-nav div .nav-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: #000000;                           /* black fill */
+            transition: fill 0.25s;
+        }
+
+        .bottom-nav div.active-nav .nav-icon svg {
+            fill: var(--accent-gold);                /* gold active */
+        }
+
+        .bottom-nav div.active-nav {
+            color: var(--accent-gold);
+            background: rgba(212, 160, 23, 0.08);
+        }
+
+        .bottom-nav div:active .nav-icon svg {
+            transform: scale(0.85);
+        }
+
+        /* Cart badge – black text on gold */
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: var(--accent-glow);
+            color: #000000;                          /* black text */
+            font-size: 9px;
+            font-weight: 800;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(212, 160, 23, 0.3);
+        }
+        .icon-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* SIDE MENU – quick version (unchanged) */
+        .side-menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(44, 30, 22, 0.4); backdrop-filter: blur(6px);
+            z-index: 998; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+        }
+        .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
+        .side-menu {
+            position: fixed; top: 0; left: -100%; width: 80%; max-width: 340px; height: 100vh;
+            background: rgba(252, 248, 242, 0.92); backdrop-filter: blur(20px);
+            z-index: 999; transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex; flex-direction: column; overflow-y: auto;
+            box-shadow: 8px 0 40px rgba(0, 0, 0, 0.08);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .side-menu.active { left: 0; }
+        .side-menu-top { display: flex; justify-content: space-between; align-items: center; padding: 30px 20px 15px 20px; }
+        .back-btn { font-size: 28px; color: var(--primary-dark); cursor: pointer; background: none; border: none; }
+
+        /* LOGIN & PROFILE – simplified */
+        .login-container { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 0 30px; }
+        .splash-img { width: 160px; height: 160px; background: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png') no-repeat center center; background-size: contain; margin-bottom: 15px; opacity: 0.85; }
+        .login-title { font-size: 30px; color: var(--primary-dark); font-weight: 900; margin-bottom: 30px; }
+        .input-group { display: flex; align-items: center; width: 100%; background: rgba(255,255,255,0.5); padding: 15px 20px; border-radius: 18px; margin-bottom: 18px; border: 1px solid rgba(255,255,255,0.3); }
+        .email-input { border: none; background: transparent; outline: none; font-size: 15px; color: var(--primary-dark); width: 100%; font-weight: 500; }
+        .proceed-btn { width: 100%; background: #D4D0CC; color: white; font-size: 18px; font-weight: 700; border: none; padding: 16px; border-radius: 18px; cursor: not-allowed; transition: 0.3s ease; margin-top: 10px; }
+        .proceed-btn.enabled { background: linear-gradient(135deg, var(--accent-glow), var(--accent-gold)); color: var(--primary-dark); cursor: pointer; }
+        .profile-container { display: none; width: 100%; padding: 0 20px; }
+        .profile-header-info { display: flex; align-items: center; gap: 16px; margin-bottom: 35px; background: rgba(255,255,255,0.4); padding: 20px; border-radius: 24px; }
+        .avatar { width: 65px; height: 65px; background: #FFF9F5 url('logo.jpg') no-repeat center center; background-size: contain; border-radius: 50%; border: 2px solid var(--accent-glow); }
+        .user-details h2 { color: var(--primary-dark); font-size: 20px; font-weight: 800; }
+        .profile-menu-list { display: flex; flex-direction: column; background: rgba(255,255,255,0.4); border-radius: 24px; padding: 8px 0; }
+        .profile-menu-item { display: flex; align-items: center; gap: 16px; padding: 16px 20px; color: var(--primary-dark); font-size: 15px; font-weight: 600; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.03); }
+        .profile-menu-item:last-child { border-bottom: none; }
+        .menu-icon-img { font-size: 20px; width: 28px; text-align: center; }
+
+        /* TOAST */
+        .top-alert { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(44, 30, 22, 0.95); backdrop-filter: blur(8px); color: white; padding: 16px 24px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; z-index: 10000; transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); border: 1px solid rgba(255, 215, 0, 0.15); }
+        .top-alert.show { top: 20px; }
+        .top-alert-close { cursor: pointer; font-size: 22px; font-weight: 700; margin-left: 15px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: 50%; }
+
+        /* MODAL */
+        .custom-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(44, 30, 22, 0.5); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .custom-modal.show { display: flex; opacity: 1; }
+        .modal-content { background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); padding: 35px 25px; border-radius: 30px; text-align: center; width: 85%; max-width: 340px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+        .close-modal-btn { background: linear-gradient(135deg, var(--accent-glow), var(--accent-gold)); color: var(--primary-dark); border: none; padding: 14px 30px; border-radius: 18px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 12px; }
+
+        @media (max-width: 600px) {
+            .brand-title { font-size: 24px; }
+            .card img { height: 120px; }
+            .bottom-nav div { font-size: 10px; gap: 0; }
+            .bottom-nav div .nav-icon svg { width: 22px; height: 22px; }
+        }
+    </style>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+
+    <!-- ===== TOP ALERT ===== -->
+    <div class="top-alert" id="topAlert">
+        <div class="top-alert-msg" id="topAlertMsg">Notification</div>
+        <div class="top-alert-close" onclick="closeTopAlert()">&times;</div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="top-row">
+            <div class="menu-icon" onclick="openSideMenu()">☰</div>
+            <div class="brand-title" id="displayBrandTitle">Dreamy Delight</div>
+        </div>
+    </header>
+
+    <!-- ===== SLIDER ===== -->
+    <div class="slider">
+        <div class="slides" id="userSlidesContainer"></div>
+        <button class="prev" onclick="prevSlide()">❮</button>
+        <button class="next" onclick="nextSlide()">❯</button>
+        <div class="dots" id="userDotsContainer"></div>
+    </div>
+
+    <!-- ===== MENU TITLE ===== -->
+    <div class="title">Our Menu</div>
+
+    <!-- ===== CATEGORIES GRID ===== -->
+    <div class="menu-grid" id="userCategoriesContainer"></div>
+
+    <!-- ===== BOTTOM NAV – BLACK ICONS + CUSTOM SVG LOGOS ===== -->
+    <nav class="bottom-nav">
+        <!-- Home -->
+        <div class="active-nav" onclick="window.location.href='index.html'">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2z"/>
+                </svg>
+            </span>
+            Home
+        </div>
+        <!-- Menu -->
+        <div onclick="window.location.href='menu.html'">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 4h10v2H7V4zm0 4h10v2H7V8zm0 4h10v2H7v-2zm-2 4h14v2H5v-2z"/>
+                </svg>
+            </span>
+            Menu
+        </div>
+        <!-- Cart -->
+        <div onclick="window.location.href='cart.html'">
+            <span class="icon-wrapper">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h3l3.6 7.59-1.35 2.45C6.07 14.74 6.82 16 8 16h10v-2H8.42l.6-1H18l3-7H5.21l-.94-2H1z"/>
+                    </svg>
+                </span>
+                <span class="cart-badge" id="cartCount">0</span>
+            </span>
+            Cart
+        </div>
+        <!-- Rewards -->
+        <div onclick="showComingSoonModal()">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+            </span>
+            Rewards
+        </div>
+    </nav>
+
+    <!-- ===== SIDE MENU ===== -->
+    <div class="side-menu-overlay" id="sideMenuOverlay" onclick="closeSideMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-top">
+            <button class="back-btn" onclick="closeSideMenu()">← Back</button>
+        </div>
+        <div class="login-container" id="loginFormContainer">
+            <div class="splash-img"></div>
+            <h1 class="login-title">Welcome Back</h1>
+            <div style="width:100%;">
+                <div class="input-group">
+                    <input type="email" id="emailBox" class="email-input" placeholder="Enter email (@gmail.com)">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="passBox" class="email-input" placeholder="Password (min 8 chars)">
+                </div>
+                <button id="proceedBtn" class="proceed-btn" disabled onclick="handleDatabaseAuth()">Proceed</button>
+            </div>
+            <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:25px;">No password reset yet. Contact customer care if needed.</p>
+        </div>
+        <div class="profile-container" id="profileContainer">
+            <div class="profile-header-info">
+                <div class="avatar"></div>
+                <div class="user-details">
+                    <h2 id="profileName">User <span style="font-size:16px;cursor:pointer;color:var(--accent-gold);" onclick="window.location.href='editprofile.html'">✏️</span></h2>
+                    <p id="profileEmail" style="color:var(--text-muted);font-size:13px;">user@gmail.com</p>
+                </div>
+            </div>
+            <div class="profile-menu-list">
+                <div class="profile-menu-item" onclick="window.location.href='order.html'"><span class="menu-icon-img">🕒</span> Recent Orders</div>
+                <div class="profile-menu-item" onclick="window.location.href='addresses.html'"><span class="menu-icon-img">📍</span> Saved Addresses</div>
+                <div style="border-bottom:5px solid #FCF8F2;"></div>
+                <div class="profile-menu-item" onclick="window.location.href='customercare.html'"><span class="menu-icon-img">🎧</span> Customer Care</div>
+                <div class="profile-menu-item" onclick="window.location.href='terms.html'"><span class="menu-icon-img">📄</span> Legal Terms</div>
+                <div style="border-bottom:5px solid #FCF8F2;"></div>
+                <div class="profile-menu-item" onclick="logoutUser()" style="color:var(--accent-gold);"><span class="menu-icon-img">🚪</span> Logout Safely</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL (Coming Soon) ===== -->
+    <div id="comingSoonModal" class="custom-modal">
+        <div class="modal-content">
+            <div style="font-size:50px;margin-bottom:10px;">🎁</div>
+            <h2 style="color:var(--primary-dark);">Coming Soon!</h2>
+            <p style="color:var(--text-muted);font-size:14px;margin:15px 0;">Exciting rewards are on the way. Stay tuned!</p>
+            <button class="close-modal-btn" onclick="closeComingSoonModal()">Got It</button>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- ===================== JAVASCRIPT ========================== -->
+    <!-- ========================================================= -->
+    <script>
+        // ---- FALLBACK DATA (IMMEDIATE VISIBLE) ----
+        const fallbackBanners = [
+            'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=400&fit=crop',
+            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&h=400&fit=crop',
+            'https://images.unsplash.com/photo-1551892372-ecf8754cf8df?w=800&h=400&fit=crop'
+        ];
+
+        const fallbackCategories = [
+            { id: 'pizza', name: '🍕 Pizza', img: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' },
+            { id: 'burger', name: '🍔 Burger', img: 'https://cdn-icons-png.flaticon.com/512/3075/3075977.png' },
+            { id: 'pasta', name: '🍝 Pasta', img: 'https://cdn-icons-png.flaticon.com/512/2926/2926935.png' },
+            { id: 'sides', name: '🍟 Sides', img: 'https://cdn-icons-png.flaticon.com/512/2710/2710281.png' },
+            { id: 'beverages', name: '🥤 Beverages', img: 'https://cdn-icons-png.flaticon.com/512/3093/3093357.png' },
+            { id: 'desserts', name: '🍰 Desserts', img: 'https://cdn-icons-png.flaticon.com/512/2710/2710302.png' }
+        ];
+
+        // ---- DOM READY ----
+        document.addEventListener('DOMContentLoaded', function() {
+            buildLiveSlider(fallbackBanners);
+            buildUserCategoriesGrid(fallbackCategories);
+            updateCartBadge();
+
+            const savedEmail = localStorage.getItem('loggedInEmail');
+            const savedName = localStorage.getItem('loggedInName');
+            if (savedEmail) {
+                updateUIForLoggedInUser(savedEmail, savedName || 'User');
+            } else {
+                updateUIForLoggedOutUser();
+            }
+
+            startAutoSlider();
+
+            if (typeof firebase !== 'undefined' && firebase.database) {
+                const db = firebase.database();
+                db.ref('homepage_config').on('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        const config = snapshot.val();
+                        if (config.brandTitle) document.getElementById('displayBrandTitle').innerText = config.brandTitle;
+                        if (config.banners) {
+                            const banners = Array.isArray(config.banners) ? config.banners : Object.values(config.banners);
+                            if (banners.length) buildLiveSlider(banners);
+                        }
+                    }
+                });
+                db.ref('menu_categories').on('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        const val = snapshot.val();
+                        const cats = Array.isArray(val) ? val : Object.values(val);
+                        if (cats.length) buildUserCategoriesGrid(cats);
+                    }
+                });
+            }
+
+            console.log('✨ Dreamy Delight – Home Loaded (Black Icons, Compact Glass Nav)');
+        });
+
+        // ---- SLIDER FUNCTIONS ----
+        function buildLiveSlider(banners) {
+            const container = document.getElementById('userSlidesContainer');
+            container.innerHTML = '';
+            banners.forEach(src => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                slide.innerHTML = `<img src="${src}" alt="banner" loading="lazy">`;
+                container.appendChild(slide);
+            });
+            sliderIndex = 0;
+            container.style.transform = 'translateX(0%)';
+            buildDots(banners.length);
+        }
+
+        function buildDots(count) {
+            const dotsContainer = document.getElementById('userDotsContainer');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        let sliderIndex = 0;
+        let autoSliderTimer;
+
+        function updateSliderPosition() {
+            const slides = document.querySelectorAll('#userSlidesContainer .slide');
+            const total = slides.length;
+            if (total === 0) return;
+            if (sliderIndex >= total) sliderIndex = 0;
+            if (sliderIndex < 0) sliderIndex = total - 1;
+            document.getElementById('userSlidesContainer').style.transform = `translateX(-${sliderIndex * 100}%)`;
+            const dots = document.querySelectorAll('#userDotsContainer .dot');
+            dots.forEach((d, i) => d.classList.toggle('active', i === sliderIndex));
+        }
+
+        function nextSlide() { sliderIndex++; updateSliderPosition(); }
+        function prevSlide() { sliderIndex--; updateSliderPosition(); }
+        function startAutoSlider() {
+            clearInterval(autoSliderTimer);
+            autoSliderTimer = setInterval(() => nextSlide(), 4000);
+        }
+
+        // ---- CATEGORIES ----
+        function buildUserCategoriesGrid(cats) {
+            const grid = document.getElementById('userCategoriesContainer');
+            grid.innerHTML = '';
+            cats.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => {
+                    localStorage.setItem('userSelectedCategoryIntent', cat.id);
+                    window.location.href = 'menu.html';
+                };
+                card.innerHTML = `<img src="${cat.img}" alt="${cat.name}" loading="lazy"><h3>${cat.name}</h3>`;
+                grid.appendChild(card);
+            });
+        }
+
+        // ---- CART BADGE ----
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            const total = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+            const badge = document.getElementById('cartCount');
+            badge.innerText = total;
+            badge.style.display = total > 0 ? 'flex' : 'none';
+        }
+
+        // ---- AUTH (unchanged) ----
+        function handleDatabaseAuth() {
+            const email = document.getElementById('emailBox').value.trim().toLowerCase();
+            const pass = document.getElementById('passBox').value;
+            const btn = document.getElementById('proceedBtn');
+            if (!email.includes('@gmail.com') || pass.length < 8) {
+                showTopAlert('Enter valid @gmail.com & min 8 chars password.', 'error');
+                return;
+            }
+            btn.innerText = 'Processing...';
+            btn.disabled = true;
+            const dbKey = email.replace(/\./g, ',');
+            const encryptedPass = btoa(pass + '_dreamySec');
+
+            if (typeof firebase !== 'undefined' && firebase.database) {
+                const db = firebase.database();
+                db.ref('users/' + dbKey).once('value').then(snap => {
+                    if (snap.exists()) {
+                        const data = snap.val();
+                        if (data.password === encryptedPass || data.password === pass) {
+                            saveSession(email, data.name || email.split('@')[0]);
+                            showTopAlert('✅ Login successful!', 'success');
+                            updateUIForLoggedInUser(email, data.name || email.split('@')[0]);
+                            closeSideMenu();
+                        } else {
+                            showTopAlert('❌ Incorrect password.', 'error');
+                        }
+                    } else {
+                        const name = email.split('@')[0];
+                        db.ref('users/' + dbKey).set({ email, password: encryptedPass, name })
+                            .then(() => {
+                                saveSession(email, name);
+                                showTopAlert('🎉 Registration successful!', 'success');
+                                updateUIForLoggedInUser(email, name);
+                                closeSideMenu();
+                            })
+                            .catch(err => showTopAlert('DB error: ' + err.message, 'error'));
+                    }
+                    resetProceedBtn();
+                }).catch(err => {
+                    showTopAlert('Network error: ' + err.message, 'error');
+                    resetProceedBtn();
+                });
+            } else {
+                saveSession(email, email.split('@')[0]);
+                showTopAlert('✅ Login successful! (Firebase fallback)', 'success');
+                updateUIForLoggedInUser(email, email.split('@')[0]);
+                closeSideMenu();
+                resetProceedBtn();
+            }
+        }
+
+        function saveSession(email, name) {
+            localStorage.setItem('loggedInEmail', email);
+            localStorage.setItem('loggedInName', name);
+        }
+
+        function resetProceedBtn() {
+            const btn = document.getElementById('proceedBtn');
+            btn.innerText = 'Proceed';
+            btn.disabled = true;
+            btn.classList.remove('enabled');
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('loggedInEmail');
+            localStorage.removeItem('loggedInName');
+            updateUIForLoggedOutUser();
+            showTopAlert('👋 Logged out.', 'success');
+            closeSideMenu();
+        }
+
+        function updateUIForLoggedInUser(email, name) {
+            document.getElementById('loginFormContainer').style.display = 'none';
+            document.getElementById('profileContainer').style.display = 'block';
+            const displayName = name.charAt(0).toUpperCase() + name.slice(1);
+            document.getElementById('profileName').innerHTML =
+                `${displayName} <span style="font-size:16px;cursor:pointer;color:var(--accent-gold);" onclick="window.location.href='editprofile.html'">✏️</span>`;
+            document.getElementById('profileEmail').innerText = email;
+        }
+
+        function updateUIForLoggedOutUser() {
+            document.getElementById('loginFormContainer').style.display = 'flex';
+            document.getElementById('profileContainer').style.display = 'none';
+            document.getElementById('emailBox').value = '';
+            document.getElementById('passBox').value = '';
+            document.getElementById('proceedBtn').disabled = true;
+            document.getElementById('proceedBtn').classList.remove('enabled');
+        }
+
+        // ---- FORM VALIDATION ----
+        const emailInput = document.getElementById('emailBox');
+        const passInput = document.getElementById('passBox');
+        const proceedBtn = document.getElementById('proceedBtn');
+
+        function validateLogin() {
+            const emailValid = emailInput.value.includes('@gmail.com');
+            const passValid = passInput.value.length >= 8;
+            if (emailValid && passValid) {
+                proceedBtn.disabled = false;
+                proceedBtn.classList.add('enabled');
+            } else {
+                proceedBtn.disabled = true;
+                proceedBtn.classList.remove('enabled');
+            }
+        }
+        emailInput.addEventListener('input', validateLogin);
+        passInput.addEventListener('input', validateLogin);
+
+        // ---- SIDE MENU ----
+        function openSideMenu() {
+            document.getElementById('sideMenu').classList.add('active');
+            document.getElementById('sideMenuOverlay').classList.add('active');
+            history.pushState({ sideMenuOpen: true }, '');
+        }
+
+        function closeSideMenu(fromPopState) {
+            document.getElementById('sideMenu').classList.remove('active');
+            document.getElementById('sideMenuOverlay').classList.remove('active');
+            if (!fromPopState && history.state && history.state.sideMenuOpen) {
+                history.back();
+            }
+        }
+
+        window.addEventListener('popstate', function() {
+            if (document.getElementById('sideMenu').classList.contains('active')) {
+                closeSideMenu(true);
+            }
+        });
+
+        // ---- TOAST ----
+        function showTopAlert(msg, type) {
+            const alertBox = document.getElementById('topAlert');
+            document.getElementById('topAlertMsg').innerText = msg;
+            if (type === 'error') alertBox.style.background = '#C0392B';
+            else alertBox.style.background = 'rgba(44, 30, 22, 0.95)';
+            alertBox.classList.add('show');
+            setTimeout(closeTopAlert, 3500);
+        }
+
+        function closeTopAlert() {
+            document.getElementById('topAlert').classList.remove('show');
+        }
+
+        // ---- MODAL ----
+        function showComingSoonModal() {
+            const modal = document.getElementById('comingSoonModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function closeComingSoonModal() {
+            const modal = document.getElementById('comingSoonModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        // ---- MISC ----
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
+        console.log('🔥 Dreamy Delight – Home Page Loaded (Black Icons, Compact Glass Nav)');
+    </script>
+
+</body>
+</html>
